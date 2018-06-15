@@ -2,7 +2,7 @@ use std::fs::File;
 use std::error::Error;
 use std::io::prelude::*;
 use std::env;
-use std::process::Command;
+use std::process::{Command, Stdio};
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -44,18 +44,25 @@ fn main() {
         println!("{}", cmd_rsync);
         let originful = format!("{}{}", origin, folder);
         let destfull = format!("{}{}", destination, folder);
-        let output = Command::new("rsync")
+        
+        let mut cmd = Command::new("rsync")
             .arg("-rtvu")
             .arg("--delete")
             .arg(originful)
             .arg(destfull)
-            .output()
+            .stdout(Stdio::inherit())
+            .stderr(Stdio::inherit())
+            .spawn()
             .expect("rsync command failed to start");
-        println!("status: {}", output.status);
-        println!("stdout: {}", String::from_utf8_lossy(&output.stdout));
+
+        let status = cmd.wait();
+        println!("\nProcess complete with status: {:?}", status);
         println!("---------------------------------------------------");
     }
+
+    println!("_________________The Process are Finished_________________");
 }
+
 
 fn create_command(origin: &str, dest: &str, folder: &str) -> String {
     format!("rsync -rtuv --delete {}{} {}{}",origin,folder,dest,folder)

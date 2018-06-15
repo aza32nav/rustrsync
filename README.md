@@ -4,7 +4,6 @@ Automation backups with rsync using a file with selected folders
 
 ## Warning << This is a personal project >> Warning
 
-+ This is a first commit
 + It is still in development and need a lot of improves
 + Manage erros for example
 + code refactoring
