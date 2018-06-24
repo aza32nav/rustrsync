@@ -7,7 +7,6 @@ Automation backups with rsync using a file with selected folders
 + It is still in development and need a lot of improves
 + Manage erros for example
 + code refactoring
-+ function approach
 
 The program works but check the code for understanding its operation
 and avoid errors in the backup.
