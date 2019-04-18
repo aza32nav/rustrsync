@@ -4,3 +4,4 @@ version = "0.1.0"
 authors = ["aza32nav <ivan32v7@tuta.io>"]
 
 [dependencies]
+ansi_term = "0.11.0"
