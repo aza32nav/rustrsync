@@ -57,6 +57,7 @@ fn main() {
             "_________________The Process are Finished_________________"));
 }
 
+/// Read the file argument and return a string
 fn read_file_to_string(filename: &str) -> io::Result<String> {
     // Open the path in read-only mode, returns 'io::Result<File>'
     let mut file = File::open(filename)?;
@@ -68,6 +69,7 @@ fn read_file_to_string(filename: &str) -> io::Result<String> {
     Ok(string_content)
 }
 
+/// Parse the string and return the origin, destination and a Vec with the folders
 fn string_to_vector(text: &str) -> (&str, &str, Vec<&str>) {
     // Split the string into a Vec<&str>
     let mut split_string = text.split("\n");
@@ -79,10 +81,13 @@ fn string_to_vector(text: &str) -> (&str, &str, Vec<&str>) {
     (origin, destination, folders)
 }
 
+/// Execute the rsync command
 fn cmd_exec(originfull: &str, destfull: &str){
     let mut cmd = Command::new("rsync")
             .arg("-rtvu")
             .arg("--delete")
+            .arg("--exclude")
+            .arg("node_modules")
             .arg(originfull)
             .arg(destfull)
             .stdout(Stdio::inherit())
@@ -99,6 +104,7 @@ fn cmd_exec(originfull: &str, destfull: &str){
                 "---------------------------------------------------"));
 }
 
+/// create a String with the rsync command
 fn create_command(origin: &str, dest: &str, folder: &str) -> String {
-    format!("rsync -rtuv --delete {}{} {}{}",origin,folder,dest,folder)
+    format!("rsync -rtuv --delete --exclude node_modules {}{} {}{}",origin,folder,dest,folder)
 }
