@@ -4,8 +4,6 @@ use std::io;
 use std::env;
 use std::process::{Command, Stdio};
 
-extern crate ansi_term;
-
 use ansi_term::Colour;
 
 fn main() {
