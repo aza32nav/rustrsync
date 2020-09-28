@@ -5,25 +5,32 @@ Automation backups with rsync using a file with selected folders
 ## Warning << This is a personal project >> Warning
 
 + It is still in development and need a lot of improves
-+ Manage erros for example
++ Manage arguments with clap or structopt
 + code refactoring
 
 The program works but check the code for understanding its operation
 and avoid errors in the backup.
 
-The file structure is:
+The file toml structure is:
 
 ```
-/home/user/
-/run/media/user/externalStorage/
-Documents/
-Music/
-Videos/
+[origin_folder]
+origin = "/home/user/"
+
+[destination_folder]
+destination = "/run/media/user/externalStorage/"
+
+[folders]
+folders = [
+  "Documents/",
+  "Music/",
+  "Videos/"
+]
 ```
 
-1. The first line is the origin folder
-2. The second line is the destination folder
-3. The next lines are the folders to be backed up
+1. The first key is the origin_folder.
+2. The second key is the destination_folder.
+3. The third key is the folders to be backed up.
 
 for example, this would be the first command generated:
 ```

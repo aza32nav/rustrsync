@@ -1,5 +1,4 @@
 /target/
 **/*.rs.bk
 Cargo.lock
-Ho
-Hoo
+Ho.toml
