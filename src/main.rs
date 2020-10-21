@@ -26,7 +26,7 @@ use std::path::PathBuf;
 /// ]
 /// 
 /// Note:
-/// The final backslash is important for the correct execution of rsync.
+/// The final slash is important for the correct execution of rsync.
 #[derive(StructOpt, Debug)]
 struct Opt {
     /// file with a valid toml configuration for rustrsync
