@@ -2,6 +2,38 @@ use std::process::{Command, Stdio};
 
 use ansi_term::Colour;
 use serde_derive::Deserialize;
+use structopt::StructOpt;
+use std::path::PathBuf;
+
+/// rustrsync
+/// Need a toml file with the next format:
+///
+/// [origin_folder]
+///
+/// origin = "/home/user/"
+/// 
+/// [destination_folder]
+///
+/// destination = "/media/user/external/backup/"
+/// 
+/// [folders]
+///
+/// folders = [
+///     "Downloads/",
+///     "Pictures/",
+///     "Music/",
+///     "PersonalFiles/"
+/// ]
+/// 
+/// Note:
+/// The final backslash is important for the correct execution of rsync.
+#[derive(StructOpt, Debug)]
+struct Opt {
+    /// file with a valid toml configuration for rustrsync
+    /// try rustrsync --help
+    #[structopt(short, long)]
+    file: PathBuf,
+}
 
 #[derive(Deserialize, Debug)]
 struct OriginFolder {
@@ -25,14 +57,16 @@ struct FileConfig {
     destination_folder: DestinationFolder,
 }
 
+// TODO: - Validate that the file contains a valid configuration
+//         and manage the Error panics.
+//       - Add a flag --init for create a basic structure toml file.
+
 fn main() {
     // Read and convert the toml file.
     let file_values: FileConfig = {
         // read the argument. I can improve with clap or structopt
-        let file_path = std::env::args()
-                            .nth(1)
-                            .expect("The file don't exist in the path");
-
+        let opt = Opt::from_args();
+        let file_path = opt.file; 
         // Read de file.
         let file_text = std::fs::read_to_string(&file_path).expect("Fail to read the file");
 

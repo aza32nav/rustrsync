@@ -1,15 +1,20 @@
 # RustRsync Project
 
-Automation backups with rsync using a file with selected folders
+Automation backups with rsync using a toml file with selected folders
 
 ## Warning << This is a personal project >> Warning
 
-+ It is still in development and need a lot of improves
-+ Manage arguments with clap or structopt
-+ code refactoring
+> It is still in development and need a lot of improves
 
-The program works but check the code for understanding its operation
-and avoid errors in the backup.
+### TODO:
+
+- Validate that the file contains a valid configuration
+  and manage the Error panics.
+- Add a flag --init for create a basic structure toml file.
+- code refactoring
+
+__The program works but check the code for understanding its operation
+and avoid errors in the backup.__
 
 The file toml structure is:
 
@@ -24,7 +29,8 @@ destination = "/run/media/user/externalStorage/"
 folders = [
   "Documents/",
   "Music/",
-  "Videos/"
+  "Videos/",
+  "Picture/"
 ]
 ```
 
@@ -39,6 +45,15 @@ rsync -rtvu --delete /home/user/Documents/ /run/media/user/externalStorage/Docum
 
 __Don't forget to put the / at the end of the folder lines and start the folder 
 names to be backed up without / to avoid rsync duplication problems.__
+
+## Use
+
+```
+$ rustrsync -f folder_backup.toml
+$ rustrsync --file folder_backup.toml
+$ rustrsync --help
+$ rustrsync --version
+```
 
 ## License
 
